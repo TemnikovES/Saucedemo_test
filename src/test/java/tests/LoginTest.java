@@ -32,4 +32,5 @@ public class LoginTest extends BaseTest {
         loginPage.inputLoginPassword("locked_out_user", "");
         assertEquals(loginPage.checkErrorMsg(), "Epic sadface: Password is required");
     }
+
 }
