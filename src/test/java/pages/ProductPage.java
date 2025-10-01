@@ -48,7 +48,6 @@ public class ProductPage extends BasePage {
         for (int i = 0; i < goodsNumber; i++) {
             this.addToCartByProductIndex(0);
         }
-
     }
 
     public String getNumberCart() {
@@ -63,5 +62,4 @@ public class ProductPage extends BasePage {
     public int getProductQuantity() {
         return driver.findElements(goodsTitle).size();
     }
-
 }

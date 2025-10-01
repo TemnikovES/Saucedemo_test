@@ -17,5 +17,4 @@ public class AddGoodsToCartTest extends BaseTest {
         assertEquals(cartPage.getProductsNames().size(), 3);
         assertFalse(cartPage.getProductsNames().isEmpty());
     }
-
 }

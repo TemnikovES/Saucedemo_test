@@ -17,7 +17,7 @@ public class LoginPage extends BasePage {
         driver.get(BASE_URL);
     }
 
-    public void open(String endPoint){
+    public void open(String endPoint) {
         driver.get(BASE_URL + endPoint);
     }
 
@@ -42,5 +42,4 @@ public class LoginPage extends BasePage {
     public String checkErrorMsg() {
         return driver.findElement(ERROR).getText();
     }
-
 }

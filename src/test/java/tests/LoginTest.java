@@ -29,5 +29,4 @@ public class LoginTest extends BaseTest {
         loginPage.login(user, password);
         assertEquals(loginPage.checkErrorMsg(), errorMsg);
     }
-
 }
