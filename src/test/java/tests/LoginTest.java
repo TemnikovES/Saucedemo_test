@@ -1,36 +1,32 @@
 package tests;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 public class LoginTest extends BaseTest {
 
     @Test(description = "Проверка корректной авторизации")
-    public void checkStandardUserLogin() {
+    public void checkCorrectLogin() {
         loginPage.open();
-        loginPage.inputLoginPassword("standard_user", "secret_sauce");
+        loginPage.login("standard_user", "secret_sauce");
         assertTrue(productPage.isTitlePresent());
+        assertEquals(productPage.getTitle(), "Products", "Название заголовка не соответствует ожидаемому");
     }
 
-    @Test(description = "Проверка авторизации заблокированного пользователя")
-    public void checkLockedOutUserLogin() {
+    @DataProvider()
+    public Object[][] loginData() {
+        return new Object[][]{
+                {"locked_out_user", "secret_sauce", "Epic sadface: Sorry, this user has been locked out."},
+                {"", "secret_sauce", "Epic sadface: Username is required"},
+                {"standard_user", "", "Epic sadface: Password is required"}
+        };
+    }
+
+    @Test(dataProvider = "loginData", description = "Проверка некорректной авторизации")
+    public void checkIncorrectLogin(String user, String password, String errorMsg) {
         loginPage.open();
-        loginPage.inputLoginPassword("locked_out_user", "secret_sauce");
-        assertEquals(loginPage.checkErrorMsg(), "Epic sadface: Sorry, this user has been locked out.");
+        loginPage.login(user, password);
+        assertEquals(loginPage.checkErrorMsg(), errorMsg);
     }
-
-    @Test(description = "Проверка авторизации без ввода Логина")
-    public void checkWithoutUsernameLogin() {
-        loginPage.open();
-        loginPage.inputLoginPassword("", "secret_sauce");
-        assertEquals(loginPage.checkErrorMsg(), "Epic sadface: Username is required");
-    }
-
-    @Test(description = "Проверка авторизации без ввода Пароля")
-    public void checkWithoutPasswordLogin() {
-        loginPage.open();
-        loginPage.inputLoginPassword("locked_out_user", "");
-        assertEquals(loginPage.checkErrorMsg(), "Epic sadface: Password is required");
-    }
-
 }
