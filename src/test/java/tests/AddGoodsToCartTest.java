@@ -1,11 +1,20 @@
 package tests;
 
+import io.qameta.allure.*;
 import org.testng.annotations.Test;
 import user.UserFactory;
 
 import static org.testng.Assert.*;
 
 public class AddGoodsToCartTest extends BaseTest {
+
+    @Epic("Модуль корзина")
+    @Feature("Физические лица")
+    @Story("Stg-123")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner("Temnikov Evgeniy, Gism092@mail.ru")
+    @TmsLink("Saucedemo_test")
+    @Issue("Saucedemo_test")
     @Test(description = "проверка товаров")
     public void checkToCartTest() {
         System.out.println("AddGoods tests are running in thread:" + Thread.currentThread().getId());

@@ -1,20 +1,22 @@
 package tests;
 
+import io.qameta.allure.Step;
+import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Optional;
-import org.testng.annotations.Parameters;
+import org.testng.ITestContext;
+import org.testng.annotations.*;
 import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductPage;
 import utils.PropertyReader;
+import utils.TestListener;
 
 import java.time.Duration;
 
+@Listeners({AllureTestNg.class, TestListener.class})
 public class BaseTest {
     public WebDriver driver;
     protected LoginPage loginPage;
@@ -26,7 +28,7 @@ public class BaseTest {
 
     @Parameters({"browser"})
     @BeforeMethod
-    public void setUp(@Optional(("chrome")) String browser) {
+    public void setUp(@Optional(("chrome")) String browser, ITestContext context) {
         if (browser.equalsIgnoreCase("chrome")) {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("start-maximized");
@@ -35,6 +37,7 @@ public class BaseTest {
         } else if (browser.equalsIgnoreCase("edge")) {
             driver = new EdgeDriver();
         }
+        context.setAttribute("driver", driver);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
         loginPage = new LoginPage(driver);
         productPage = new ProductPage(driver);
@@ -44,6 +47,7 @@ public class BaseTest {
         locked = PropertyReader.getProperty("saucedemo.locked");
     }
 
+    @Step("Закрытие браузера")
     @AfterMethod(alwaysRun = true)
     public void close() {
         driver.quit();
