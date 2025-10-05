@@ -1,14 +1,23 @@
 package tests;
 
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import io.qameta.allure.*;
+import io.qameta.allure.testng.AllureTestNg;
+import org.testng.annotations.*;
 import user.User;
 
 import static org.testng.Assert.*;
 import static user.UserFactory.*;
 
+@Listeners(AllureTestNg.class)
 public class LoginTest extends BaseTest {
 
+    @Epic("Модуль логин")
+    @Feature("Физические лица")
+    @Story("Stg-123")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner("Temnikov Evgeniy, Gism092@mail.ru")
+    @TmsLink("Saucedemo_test")
+    @Issue("Saucedemo_test")
     @Test(description = "Проверка корректной авторизации")
     public void checkCorrectLogin() {
         System.out.println("Login tests are running in thread:" + Thread.currentThread().getId());
@@ -31,6 +40,13 @@ public class LoginTest extends BaseTest {
         };
     }
 
+    @Epic("Модуль логин")
+    @Feature("Физические лица")
+    @Story("Stg-123")
+    @Severity(SeverityLevel.NORMAL)
+    @Owner("Temnikov Evgeniy, Gism092@mail.ru")
+    @TmsLink("Saucedemo_test")
+    @Issue("Saucedemo_test")
     @Test(dataProvider = "loginData", description = "Проверка некорректной авторизации")
     public void checkIncorrectLogin(User user, String errorMsg) {
         System.out.println("Login negative tests are running in thread:" + Thread.currentThread().getId());
