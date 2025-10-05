@@ -5,6 +5,8 @@ import io.qameta.allure.testng.AllureTestNg;
 import org.testng.annotations.*;
 import user.User;
 
+import static enums.DepartmentNaming.*;
+import static enums.ErrorMessage.*;
 import static org.testng.Assert.*;
 import static user.UserFactory.*;
 
@@ -24,7 +26,7 @@ public class LoginTest extends BaseTest {
         loginPage.open();
         loginPage.login(withAdminPermission());
         assertTrue(productPage.isTitlePresent());
-        assertEquals(productPage.getTitle(), "Products", "Название заголовка не соответствует ожидаемому");
+        assertEquals(productPage.getTitle(), PRODUCTS.getDisplayName(), "Название заголовка не соответствует ожидаемому");
     }
 
     @DataProvider()
@@ -34,9 +36,9 @@ public class LoginTest extends BaseTest {
         User emptyPassword = withEmptyPassword();
 
         return new Object[][]{
-                {lockUser, "Epic sadface: Sorry, this user has been locked out."},
-                {emptyUser, "Epic sadface: Username is required"},
-                {emptyPassword, "Epic sadface: Password is required"}
+                {lockUser, USER_LOCK_MSG.getDisplayName()},
+                {emptyUser, EMPTY_USER_MSG.getDisplayName()},
+                {emptyPassword, EMPTY_PASSWORD_MSG.getDisplayName()}
         };
     }
 
